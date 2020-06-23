@@ -1,4 +1,4 @@
-// Construct Single Node
+// The Node
 class Node {
   constructor(data, next = null) {
     this.data = data;
@@ -6,14 +6,15 @@ class Node {
   }
 }
 
-// Create/Get/Remove Nodes From Linked List
+// Linked List Class where we define our methods for deleting, appending nodes and more!
 class LinkedList {
   constructor() {
     this.head = null;
     this.size = 0;
   }
 
-  // Insert first node
+  // Insert first node, means we have a new header
+  // and point with the new Header to the old Header which is now the first node
   insertFirst(data) {
     this.head = new Node(data, this.head);
     this.size++;
@@ -21,15 +22,18 @@ class LinkedList {
 
   // Insert last node
   insertLast(data) {
+    // Create a new Node
     let node = new Node(data);
     let current;
 
-    // If empty, make head
+    // If the head is empty, create it
     if (!this.head) {
       this.head = node;
     } else {
       current = this.head;
 
+      // Loop through the Linked List till the end
+      // and then just take the last Node and let it point to our new node
       while (current.next) {
         current = current.next;
       }
@@ -40,14 +44,14 @@ class LinkedList {
     this.size++;
   }
 
-  // Insert at index
+  // Insert at a specific index
   insertAt(data, index) {
-    //  If index is out of range
+    //  If index is out of range just return and do nothing
     if (index > 0 && index > this.size) {
       return;
     }
 
-    // If first index
+    // If the index is 0 we just have to insert a new header and use our method for this
     if (index === 0) {
       this.insertFirst(data);
       return;
@@ -56,19 +60,22 @@ class LinkedList {
     const node = new Node(data);
     let current, previous;
 
-    // Set current to first
+    // Set current to header so we can loop through the Linked List
     current = this.head;
     let count = 0;
 
+    // We loop through the Linked List till we reach our index
     while (count < index) {
-      previous = current; // Node before index
+      previous = current; // The Node before our index
       count++;
-      current = current.next; // Node after index
+      current = current.next; // The Node after our index
     }
 
-    node.next = current;
-    previous.next = node;
+    // Insert it between the two nodes we declared in the While Loop
+    node.next = current; // Our new Node has the Node AFTER our Index
+    previous.next = node; // The Node BEFORE our Index has now our Node for the next pointer
 
+    // Increase the size of the Linked List by one as we inserted one new node
     this.size++;
   }
 
@@ -145,10 +152,11 @@ class LinkedList {
     this.size = 0;
   }
 
-  // Print list data
+  // Print our Linked List
   printListData() {
     let current = this.head;
 
+    // Loop through all nodes till current is not null
     while (current) {
       console.log(current.data);
       current = current.next;
@@ -176,20 +184,14 @@ class LinkedList {
   }
 }
 
+// Lets test our Linked List!
 const ll = new LinkedList();
 
-ll.insertFirst(100);
-ll.insertFirst(200);
 ll.insertFirst(300);
+ll.insertFirst(200);
+ll.insertFirst(100);
 ll.insertLast(400);
+ll.insertAt(800, 1);
 
-ll.removeAllFromIndex(3);
-
-// ll.removeAt(2);
-// ll.removeLast();
-// ll.removeFirst();
-
-// ll.clearList();
-// ll.getAt(2);
-
+// Print the Linked List
 ll.printListData();
